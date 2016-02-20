@@ -19,6 +19,8 @@ public class User implements Serializable {
     public int phone;
     public ArrayList<Address> addresses;
     public static User instance;
+    public double latitude;
+    public double longitude;
 
     public User(){}
 
@@ -112,5 +114,21 @@ public class User implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 }

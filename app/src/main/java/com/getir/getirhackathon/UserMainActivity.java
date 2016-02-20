@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -17,14 +19,18 @@ import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.ndk.CrashlyticsNdk;
+import com.getir.getirhackathon.Adapters.CategoryGridAdapter;
+import com.getir.getirhackathon.Adapters.MyAdapter;
 import com.getir.getirhackathon.Dialogs.SendAddressDialog;
 import com.getir.getirhackathon.Dialogs.ServiceProfileDialog;
 import com.getir.getirhackathon.Dialogs.UserProfileDialog;
+import com.getir.getirhackathon.Objects.ServiceUser;
 import com.getir.getirhackathon.Objects.User;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,7 +44,9 @@ public class UserMainActivity extends Activity{
 
     private TextView settings_button, list_button, language_icon, user_icon_text, cart_down_icon, logout_icon, back_button_left_drawer, name, languages_text;
     private TextView versionBuild, address_icon;
-    private GridView gridView;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
     private Spinner spinner;
     private LinearLayout profileLayout, prevCartLayout, logoutLayout, adresses_layout;
     private ImageButton en_button, tr_button;
@@ -46,6 +54,7 @@ public class UserMainActivity extends Activity{
     private RelativeLayout rightDrawerLayout, leftDrawerLayout;
     private Context mContext;
     private Socket socket;
+    private ArrayList<ServiceUser> serviceUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +81,8 @@ public class UserMainActivity extends Activity{
         settings_button.setTextSize(30);
         settings_button.setTextColor(getResources().getColor(R.color.black));
 
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
         settings_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,6 +100,23 @@ public class UserMainActivity extends Activity{
                 drawerLayout.openDrawer(leftDrawerLayout);
             }
         });
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        recyclerView.setHasFixedSize(true);
+
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(mLayoutManager);
+
+        ArrayList<String> myDataset = new ArrayList<>();
+        myDataset.add("emre");
+        myDataset.add("asda");
+        myDataset.add("23123");
+
+        // specify an adapter (see also next example)
+        mAdapter = new MyAdapter(myDataset);
+        recyclerView.setAdapter(mAdapter);
 
         //Right Drawer View
         initRightDrawerView();
@@ -151,12 +179,10 @@ public class UserMainActivity extends Activity{
             @Override
             public void onClick(View v) {
                 drawerLayout.closeDrawer(leftDrawerLayout);
-                socket.disconnect();
+                Util.socket.disconnect();
                 finish();
             }
         });
-
-        gridView = (GridView) findViewById(R.id.gridView);
         spinner = (Spinner) findViewById(R.id.spinner);
 
         List<String> categories = new ArrayList<String>();
@@ -263,6 +289,18 @@ public class UserMainActivity extends Activity{
                     @Override
                     public void run() {
                         Log.i("response", args[0].toString());
+                        serviceUsers = new ArrayList<ServiceUser>();
+                        JSONArray serviceUsersJson = (JSONArray) args[0];
+                        for(int i = 0; i<serviceUsersJson.length(); i++){
+                            try {
+                                serviceUsers.add(ServiceUser.objectFromJson(serviceUsersJson.getJSONObject(i)));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Crashlytics.log("UserMainActivity" + "-" + e.getLocalizedMessage());
+                            }
+                        }
+                        Log.i("couriers", serviceUsers.toString());
+                        //fillRecyclerView();
                     }
                 });
             }
@@ -291,5 +329,9 @@ public class UserMainActivity extends Activity{
         if (Util.socket != null) {
             Util.socket.disconnect();
         }
+    }
+
+    private void fillRecyclerView(){
+
     }
 }

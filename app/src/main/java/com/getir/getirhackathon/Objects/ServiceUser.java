@@ -50,6 +50,24 @@ public class ServiceUser implements Serializable{
         }
     }
 
+    public static ServiceUser objectFromJson(JSONObject jObject){
+        ServiceUser serviceUser = new ServiceUser();
+        try{
+            //serviceUser.id = jObject.getString("_id");
+            serviceUser.name = jObject.getString("name");
+            serviceUser.info = jObject.getString("info");
+            serviceUser.phone = jObject.getInt("phone");
+            serviceUser.longitude = jObject.getDouble("longitude");
+            serviceUser.latitude = jObject.getDouble("latitude");
+            //serviceUser.category = Category.objectFromJson(jObject.getJSONObject("category"));
+            serviceUser.price = Price.objectFromJson(jObject.getJSONObject("price"));
+        }catch (JSONException e) {
+            Log.e("ServiceUser", e.getLocalizedMessage());
+            Crashlytics.log("ServiceUser - try/catch");
+        }
+        return serviceUser;
+    }
+
     public String getId() {
         return id;
     }

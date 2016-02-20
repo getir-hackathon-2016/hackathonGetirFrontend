@@ -3,10 +3,14 @@ package com.getir.getirhackathon.Dialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.ListPopupWindow;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 
 import com.getir.getirhackathon.MapFragmentActivity;
+import com.getir.getirhackathon.Objects.User;
 import com.getir.getirhackathon.R;
 import com.getir.getirhackathon.Util;
 
@@ -65,7 +69,12 @@ public class SendAddressDialog extends Dialog {
         send_saved_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //
+                if(User.getInstance().getAddresses() != null && User.getInstance().getAddresses().size() > 0){
+                    dismiss();
+                    AddressesListDialog dialog = new AddressesListDialog(context);
+                    dialog.show();
+
+                }
             }
         });
 

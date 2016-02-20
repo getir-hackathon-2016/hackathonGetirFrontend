@@ -304,11 +304,15 @@ public class ServiceMainActivity extends FragmentActivity implements OnMapReadyC
         }
 
         final JSONObject jObject = new JSONObject();
+        ServiceUser.getInstance().setLatitude(latitude);
+        ServiceUser.getInstance().setLongitude(longitude);
         try {
             jObject.put("courierId", ServiceUser.getInstance().getId());
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+
 
         socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
             @Override

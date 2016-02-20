@@ -23,24 +23,24 @@ import mehdi.sakout.fancybuttons.FancyButton;
 /**
  * Created by Emre on 20.02.2016.
  */
-public class CategoryGridAdapter extends BaseAdapter {
+public class CategoryItemAdapter extends BaseAdapter {
 
-    private Context mContext;
-    private ArrayList<ServiceUser> users;
+    private Context context;
+    private ArrayList<ServiceUser> array;
 
-    public CategoryGridAdapter(Context mContext, ArrayList<ServiceUser> users){
-        this.mContext = mContext;
-        this.users = users;
+    public CategoryItemAdapter(Context context, ArrayList<ServiceUser> array){
+        this.context = context;
+        this.array = array;
     }
 
     @Override
     public int getCount() {
-        return users.size();
+        return array.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return users.get(position);
+        return array.get(position);
     }
 
     @Override
@@ -49,27 +49,20 @@ public class CategoryGridAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
 
-        final ServiceUser currentServiceUser = users.get(position);
+        final ServiceUser currentServiceUser = array.get(position);
 
         if(convertView == null) {
             holder = new ViewHolder();
-            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.category_gridview_item, null);
 
             holder.title = (TextView) convertView.findViewById(R.id.name);
             holder.price = (TextView) convertView.findViewById(R.id.price);
             holder.category = (TextView) convertView.findViewById(R.id.category);
             holder.choose_button = (FancyButton) convertView.findViewById(R.id.choose_button);
-
-            holder.choose_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
 
             convertView.setTag(holder);
         }
@@ -78,22 +71,20 @@ public class CategoryGridAdapter extends BaseAdapter {
         }
 
         holder.title.setText(currentServiceUser.getName());
-        //holder.category.setText(currentServiceUser.getCategory().getName());
         holder.price.setText(currentServiceUser.getName());
-
+        holder.category.setText(currentServiceUser.getCategory().getName());
         holder.choose_button.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     holder.choose_button.setGhost(false);
-                    holder.choose_button.setBackgroundColor(mContext.getResources().getColor(R.color.gray));
+                    holder.choose_button.setBackgroundColor(context.getResources().getColor(R.color.gray));
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     holder.choose_button.setGhost(true);
                 }
                 return false;
             }
         });
-
         holder.choose_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,10 +105,8 @@ public class CategoryGridAdapter extends BaseAdapter {
             }
         });
 
-
         return convertView;
     }
-
 
     public class ViewHolder {
         public TextView title;
@@ -125,5 +114,4 @@ public class CategoryGridAdapter extends BaseAdapter {
         public TextView category;
         public FancyButton choose_button;
     }
-
 }

@@ -77,6 +77,8 @@ public class MapFragmentActivity extends FragmentActivity implements OnMapReadyC
                     }
                     Util.socket.emit("getAvailableCouriers", jObject);
                 }
+                User.getInstance().setLatitude(latitude);
+                User.getInstance().setLongitude(longitude);
                 finish();
             }
         });

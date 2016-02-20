@@ -1,38 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="100dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/name"
-        android:textSize="20sp"
-        android:text="name"/>
+        android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/price"
-        android:textSize="20sp"
-        android:text="49.00TL"
-        android:layout_toRightOf="@+id/name"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/category"
+                android:textSize="20sp"
+                android:text="cat"/>
 
-    <mehdi.sakout.fancybuttons.FancyButton
-        android:id="@+id/choose_button"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_toRightOf="@id/price"
-        android:layout_marginLeft="20dp"
-        fancy:fb_ghost="true"
-        fancy:fb_borderColor="#FFFFFF"
-        fancy:fb_borderWidth="2dp"
-        fancy:fb_defaultColor="#7ab800"
-        fancy:fb_focusColor="#9bd823"
-        fancy:fb_radius="3dp"
-        fancy:fb_text="@string/choose"
-        fancy:fb_textColor="#FFFFFF"
-        fancy:fb_textSize="18sp"/>
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/name"
+                android:textSize="20sp"
+                android:text="name"/>
 
-</RelativeLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/price"
+            android:textSize="20sp"
+            android:text="49.00TL"/>
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/choose_button"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            fancy:fb_ghost="true"
+            fancy:fb_borderColor="#FFFFFF"
+            fancy:fb_borderWidth="2dp"
+            fancy:fb_defaultColor="#7ab800"
+            fancy:fb_focusColor="#9bd823"
+            fancy:fb_radius="3dp"
+            fancy:fb_text="@string/choose"
+            fancy:fb_textColor="#FFFFFF"
+            fancy:fb_textSize="18sp"/>
+
+    </LinearLayout>
+
+</LinearLayout>
