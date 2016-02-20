@@ -10,6 +10,10 @@
     <string name="all">All</string>
     <string name="choose">Choose</string>
     <string name="save">Save</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Log in</string>
+
 
     <string name="languages">Languages</string>
 </resources>

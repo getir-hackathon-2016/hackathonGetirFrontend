@@ -48,6 +48,8 @@ public class ServiceMainActivity extends Activity {
     private LocationManager mLocationManager;
     private Socket socket;
 
+    private ServiceUser currentServiceUser;
+
     private final LocationListener mLocationListener = new LocationListener() {
         @Override
         public void onLocationChanged(final Location location) {
@@ -76,6 +78,8 @@ public class ServiceMainActivity extends Activity {
         //Run Fabric for notify crashes.
         Fabric.with(this, new Crashlytics(), new CrashlyticsNdk());
         mContext = this;
+
+        currentServiceUser = ServiceUser.getInstance();
 
         setContentView(R.layout.service_main_layout);
 
@@ -115,10 +119,6 @@ public class ServiceMainActivity extends Activity {
                 drawerLayout.openDrawer(leftDrawerLayout);
             }
         });
-
-        name = (TextView) findViewById(R.id.name_text);
-
-        name.setText(ServiceUser.getInstance().getName());
 
         //Right Drawer View
         initRightDrawerView();

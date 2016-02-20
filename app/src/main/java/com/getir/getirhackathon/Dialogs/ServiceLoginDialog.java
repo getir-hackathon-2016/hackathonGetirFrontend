@@ -35,8 +35,8 @@ public class ServiceLoginDialog extends Dialog {
         this.context = context;
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setCanceledOnTouchOutside(true);
         setContentView(R.layout.service_login_dialog);
+        setCanceledOnTouchOutside(false);
 
         password_text = (EditText) findViewById(R.id.password_text);
         button = (Button) findViewById(R.id.button);
