@@ -14,28 +14,45 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.ndk.CrashlyticsNdk;
+import com.github.nkzawa.emitter.Emitter;
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.URISyntaxException;
 
 import io.fabric.sdk.android.Fabric;
 
+import static com.google.android.gms.internal.zzir.runOnUiThread;
+
 public class MainActivity extends Activity {
 
-    private TextView settings_button, list_button, location_text;
+    private TextView settings_button, list_button, language_icon, user_icon_text, cart_down_icon, logout_icon;
+    private LinearLayout profileLayout, prevCartLayout, logoutLayout;
+    private ImageButton en_button, tr_button;
     private DrawerLayout drawerLayout;
     private RelativeLayout rightDrawerLayout, leftDrawerLayout;
     private Context mContext;
     private LocationManager mLocationManager;
+    private Socket socket;
 
     private final LocationListener mLocationListener = new LocationListener() {
         @Override
         public void onLocationChanged(final Location location) {
-            location_text.setText(String.valueOf(location.getLatitude()) + "-" + String.valueOf(location.getLongitude()));
+            //location_text.setText(String.valueOf(location.getLatitude()) + "-" + String.valueOf(location.getLongitude()));
         }
 
         @Override
@@ -71,6 +88,9 @@ public class MainActivity extends Activity {
 
         //To initiliaze location listener.
         initLocationListener();
+
+        //Start socketIO
+        startSocket();
     }
 
     private void initView() {
@@ -98,9 +118,6 @@ public class MainActivity extends Activity {
 //            }
 //        });
 
-        location_text = (TextView) findViewById(R.id.location_text);
-        location_text.setTextColor(Color.BLACK);
-
         list_button = (TextView) findViewById(R.id.left_drawer_button);
         list_button.setTypeface(Util.getFontAwesome(mContext));
         list_button.setTextColor(getResources().getColor(R.color.blue_light));
@@ -119,15 +136,49 @@ public class MainActivity extends Activity {
         //Left Drawer View
         initLeftDrawerView();
     }
+
     private void initLeftDrawerView(){
         leftDrawerLayout = (RelativeLayout) findViewById(R.id.left_drawer);
+        user_icon_text = (TextView) findViewById(R.id.user_icon_text);
+        user_icon_text.setTypeface(Util.getFontAwesome(mContext));
+
+        cart_down_icon = (TextView) findViewById(R.id.cart_down_icon);
+        cart_down_icon.setTypeface(Util.getFontAwesome(mContext));
+
+        logout_icon = (TextView) findViewById(R.id.logout_icon);
+        logout_icon.setTypeface(Util.getFontAwesome(mContext));
+
+        profileLayout = (LinearLayout) findViewById(R.id.profile_layout);
+        prevCartLayout = (LinearLayout) findViewById(R.id.prev_cart_layout);
+        logoutLayout = (LinearLayout) findViewById(R.id.logout_layout);
     }
 
     private void initRightDrawerView(){
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         rightDrawerLayout = (RelativeLayout) findViewById(R.id.right_drawer);
+        language_icon = (TextView) findViewById(R.id.language_icon);
+        language_icon.setTypeface(Util.getFontAwesome(mContext));
 
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        en_button = (ImageButton) findViewById(R.id.en_button);
+        tr_button = (ImageButton) findViewById(R.id.tr_button);
+
+        en_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.closeDrawer(rightDrawerLayout);
+
+                //
+            }
+        });
+
+        tr_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.closeDrawer(rightDrawerLayout);
+
+                //
+            }
+        });
     }
 
     private void initLocationListener(){
@@ -161,6 +212,97 @@ public class MainActivity extends Activity {
                 }
             });
             dialog.show();
+        }
+    }
+
+    private void startSocket(){
+        IO.Options opts = new IO.Options();
+        opts.forceNew = true;
+
+        try {
+            socket = IO.socket(Util.SERVER_URL, opts);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        final JSONObject jObject = new JSONObject();
+        try {
+            jObject.put("name", "emre alparslan");
+            jObject.put("address", "adres");
+            jObject.put("phone", "055487");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        socket.emit("getAvailableCouriers", jObject);
+                        socket.on("sortedCouriersList", new Emitter.Listener() {
+                            @Override
+                            public void call(final Object... args) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        JSONArray obj = (JSONArray)args[0];
+                                        Log.i("response - sortedCouriersList", obj.toString());
+                                    }
+                                });
+
+                            }
+
+                        });
+                        Log.i("response", "connected");
+                    }
+                });
+            }
+
+        }).on("refresh", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.i("response", "refresh");
+                    }
+                });
+
+            }
+
+        }).on(Socket.EVENT_DISCONNECT, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.i("response", "disconnected");
+                    }
+                });
+
+            }
+
+        });
+        socket.connect();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(socket != null){
+            socket.disconnect();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(socket != null){
+            socket.connect();
+        }else{
+            startSocket();
         }
     }
 }

@@ -4,10 +4,18 @@
     <string name="settings_icon">&#xf013;</string>
     <string name="location_icon">&#xf124;</string>
     <string name="list_icon">&#xf0ca;</string>
+    <string name="language_icon">&#xf0ac;</string>
+    <string name="user_icon">&#xf007;</string>
+    <string name="cart_down">&#xf218;</string>
+    <string name="logout_icon">&#xf08b;</string>
+    <string name="back_icon">&#xf060;</string>
 
     <string name="cancel">İptal</string>
     <string name="open_location_settings">Konum Servisi Ayarları</string>
     <string name="location_service_not_enabled">Konum Servisleri devre dışı!</string>
+    <string name="profile">Profil</string>
+    <string name="previous_orders">Önceki Siparişlerim</string>
+    <string name="logout">Çıkış Yap</string>
 
     <string name="languages">Diller</string>
 </resources>

@@ -4,8 +4,9 @@
     <string name="cancel">Cancel</string>
     <string name="location_service_not_enabled">Location Service is not enabled!</string>
     <string name="open_location_settings">Location Settings</string>
-    <string name="pause">Pause Location Updates</string>
-    <string name="resume">Resume Location Updates</string>
+    <string name="profile">Profile</string>
+    <string name="previous_orders">Previous Orders</string>
+    <string name="logout">Logout</string>
 
     <string name="languages">Languages</string>
 </resources>

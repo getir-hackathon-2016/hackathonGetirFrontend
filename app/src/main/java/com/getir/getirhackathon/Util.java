@@ -5,6 +5,20 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Log;
+
+import com.github.nkzawa.emitter.Emitter;
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.URISyntaxException;
+import java.text.DateFormat;
+import java.util.Date;
+
+import static com.google.android.gms.internal.zzir.runOnUiThread;
 
 /**
  * Created by Emre on 19.02.2016.
@@ -13,6 +27,8 @@ public class Util {
 
     public static long LOCATION_REFRESH_TIME = 100;
     public static float LOCATION_REFRESH_DISTANCE = 0.1f;
+
+    public static String SERVER_URL = "http://192.168.1.95:9000";
 
     public static Typeface getFontAwesome(Context context){
         Typeface fontAwesome = Typeface.createFromAsset( context.getAssets(), "fontawesome-webfont.ttf" );
@@ -37,8 +53,6 @@ public class Util {
             locationProviders = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
             return !TextUtils.isEmpty(locationProviders);
         }
-
-
     }
 
 }
