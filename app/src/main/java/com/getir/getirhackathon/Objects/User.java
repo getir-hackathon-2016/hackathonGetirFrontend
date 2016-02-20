@@ -15,7 +15,8 @@ import java.util.ArrayList;
  * Created by Emre on 20.02.2016.
  */
 public class User implements Serializable {
-    public String id, name, address, phone, info;
+    public String id, name, info, username, password;
+    public int phone;
     public ArrayList<Address> addresses;
     public static User instance;
 
@@ -36,8 +37,9 @@ public class User implements Serializable {
         try{
             instance.id = jObject.getString("_id");
             instance.name = jObject.getString("name");
-            instance.address = jObject.getString("name");
-            instance.name = jObject.getString("name");
+            instance.username = jObject.getString("username");
+            instance.password = jObject.getString("password");
+            instance.phone = jObject.getInt("phone");
             if(jObject.has("addresses") && jObject.getJSONArray("addresses") != null){
                 JSONArray jsonAddresses = jObject.getJSONArray("addresses");
                 instance.addresses = new ArrayList<>(jsonAddresses.length());
@@ -68,22 +70,6 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public String getInfo() {
         return info;
     }
@@ -102,5 +88,29 @@ public class User implements Serializable {
 
     public static void setInstance(User instance) {
         User.instance = instance;
+    }
+
+    public int getPhone() {
+        return phone;
+    }
+
+    public void setPhone(int phone) {
+        this.phone = phone;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

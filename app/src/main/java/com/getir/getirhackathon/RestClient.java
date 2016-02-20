@@ -25,6 +25,11 @@ public class RestClient {
         client.get(getAbsoluteUrl(url), responseHandler);
     }
 
+    public static void get(String url,RequestParams params, AsyncHttpResponseHandler responseHandler) throws JSONException {
+        client.addHeader("content-type", "application/json");
+        client.get(getAbsoluteUrl(url), params, responseHandler);
+    }
+
     public static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         client.addHeader("content-type", "application/json");
         client.post(getAbsoluteUrl(url), params, responseHandler);

@@ -3,16 +3,12 @@ package com.getir.getirhackathon;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.ndk.CrashlyticsNdk;
@@ -20,6 +16,7 @@ import com.getir.getirhackathon.Dialogs.ServiceLoginDialog;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,43 +43,6 @@ public class SplashActivity extends Activity {
         setContentView(R.layout.splash_layout);
 
         logo = (ImageButton) findViewById(R.id.logo);
-
-//        logo.setOnTouchListener(new View.OnTouchListener() {
-//            Handler handler = new Handler();
-//
-//            int numberOfTaps = 0;
-//            long lastTapTimeMs = 0;
-//            long touchDownMs = 0;
-//
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                switch (event.getAction()) {
-//                    case MotionEvent.ACTION_DOWN:
-//                        touchDownMs = System.currentTimeMillis();
-//                        break;
-//                    case MotionEvent.ACTION_UP:
-//                        handler.removeCallbacksAndMessages(null);
-//                        lastTapTimeMs = System.currentTimeMillis();
-//                        if ((System.currentTimeMillis() - touchDownMs) > ViewConfiguration.getTapTimeout()) {
-//                            //it was not a tap
-//                            numberOfTaps = 0;
-//                            lastTapTimeMs = 0;
-//                            break;
-//                        } else if (numberOfTaps > 0 && (System.currentTimeMillis() - lastTapTimeMs) < ViewConfiguration.getDoubleTapTimeout()) {
-//                            numberOfTaps += 1;
-//                        } else {
-//                            numberOfTaps = 1;
-//                        }
-//
-//                        if (numberOfTaps == 3) {
-//                            ServiceLoginDialog dialog = new ServiceLoginDialog(mContext);
-//                            dialog.show();
-//                        }
-//                }
-//                return true;
-//            }
-//        });
-
         logo.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -100,12 +60,15 @@ public class SplashActivity extends Activity {
         button_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String pass = password_text.getText().toString();
+                String password = password_text.getText().toString();
                 String username = username_text.getText().toString();
+
                 RequestParams params = new RequestParams();
+                params.put("username", username);
+                params.put("password", password);
                 //params.put("password", pass);
                 try {
-                    RestClient.get("/api/couriers/password/" + pass, new JsonHttpResponseHandler() {
+                    RestClient.get("/api/users/login/" + password + "/" + username, new JsonHttpResponseHandler() {
                         @Override
                         public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                         }
@@ -119,10 +82,24 @@ public class SplashActivity extends Activity {
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                             super.onSuccess(statusCode, headers, response);
                             Log.i("get", response.toString());
-                            Util.parseServiceJson(response);
-                            Intent i = new Intent(SplashActivity.this, MainActivity.class);
+                            Util.parseUserJson(response);
+                            Intent i = new Intent(mContext, UserMainActivity.class);
                             startActivity(i);
                         }
+
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                            super.onSuccess(statusCode, headers, response);
+                            Log.i("get1", response.toString());
+                        }
+
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                            super.onSuccess(statusCode, headers, responseString);
+                            Log.i("get2", responseString.toString());
+                        }
+
+
                     });
                 } catch (JSONException e) {
                     e.printStackTrace();

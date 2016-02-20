@@ -1,6 +1,5 @@
 package com.getir.getirhackathon;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,7 +24,7 @@ import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.ndk.CrashlyticsNdk;
-import com.getir.getirhackathon.Dialogs.ProfileDialog;
+import com.getir.getirhackathon.Dialogs.ServiceProfileDialog;
 import com.getir.getirhackathon.Objects.ServiceUser;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
@@ -35,16 +34,12 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -204,7 +199,8 @@ public class ServiceMainActivity extends FragmentActivity implements OnMapReadyC
         profileLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ProfileDialog profile = new ProfileDialog(mContext);
+                ServiceProfileDialog profile = new ServiceProfileDialog(mContext);
+                drawerLayout.closeDrawer(leftDrawerLayout);
                 profile.show();
             }
         });
@@ -212,6 +208,7 @@ public class ServiceMainActivity extends FragmentActivity implements OnMapReadyC
         logoutLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                drawerLayout.closeDrawer(leftDrawerLayout);
                 socket.disconnect();
                 finish();
             }

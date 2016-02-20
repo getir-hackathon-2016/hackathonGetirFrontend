@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="350dip"
+    android:gravity="center"
+    android:layout_gravity="center_vertical"
+    android:background="@color/blue_light">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/name"
+        android:textSize="24sp"
+        android:hint="@string/address_name"
+        android:textColor="@color/gray"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/adress"
+        android:textSize="24sp"
+        android:hint="@string/address"
+        android:textColor="@color/gray"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/town"
+        android:textSize="24sp"
+        android:hint="@string/town"
+        android:textColor="@color/gray"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/country"
+        android:textSize="24sp"
+        android:hint="@string/country"
+        android:textColor="@color/gray"/>
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/save"
+        android:layout_width="150dip"
+        android:layout_height="75dip"
+        fancy:fb_text="@string/save"
+        fancy:fb_borderColor="@color/gray"
+        fancy:fb_borderWidth="2dp"
+        fancy:fb_ghost="true"
+        fancy:fb_radius="2dp"
+        fancy:fb_textColor="@color/black"
+        fancy:fb_textSize="21sp"
+        android:layout_marginTop="30dp"/>
+
+</LinearLayout>

@@ -9,9 +9,11 @@ import java.io.Serializable;
  * Created by Emre on 20.02.2016.
  */
 public class Address implements Serializable {
-    String id, name, address, town, country, latitude, longtitude;
+    String id, name, address, town, country;
+    double latitude, longitude;
 
-    Address(){}
+
+    public Address(){}
 
     public static Address objectFromJson(JSONObject jsonObject){
         Address adress = new Address();
@@ -21,11 +23,10 @@ public class Address implements Serializable {
             adress.address = jsonObject.getString("address");
             adress.town = jsonObject.getString("town");
             adress.country = jsonObject.getString("country");
-            adress.latitude = jsonObject.getString("town");
-            adress.longtitude = jsonObject.getString("longtitude");
+            adress.latitude = jsonObject.getDouble("latitude");
+            adress.longitude = jsonObject.getDouble("longitude");
         }catch (JSONException e){
             e.printStackTrace();
-
         }
         return adress;
     }
@@ -70,19 +71,19 @@ public class Address implements Serializable {
         this.country = country;
     }
 
-    public String getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public String getLongtitude() {
-        return longtitude;
+    public double getLongitude() {
+        return longitude;
     }
 
-    public void setLongtitude(String longtitude) {
-        this.longtitude = longtitude;
+    public void setLongitude(double longtitude) {
+        this.longitude = longtitude;
     }
 }

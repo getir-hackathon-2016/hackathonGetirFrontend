@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="300dip"
+    android:gravity="center_horizontal|center_vertical"
+    android:background="@color/blue_light">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/send_your_address"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/send_your_address_desc"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/gray"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/send_current_location"
+            android:layout_width="150dip"
+            android:layout_height="75dip"
+            fancy:fb_text="@string/send_current_location"
+            fancy:fb_borderColor="@color/gray"
+            fancy:fb_borderWidth="2dp"
+            fancy:fb_ghost="true"
+            fancy:fb_radius="2dp"
+            fancy:fb_textColor="@color/black"
+            fancy:fb_textSize="21sp"
+            android:layout_marginTop="30dp"/>
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/send_saved_address"
+            android:layout_width="150dip"
+            android:layout_height="75dip"
+            fancy:fb_text="@string/send_saved_address"
+            fancy:fb_borderColor="@color/gray"
+            fancy:fb_borderWidth="2dp"
+            fancy:fb_ghost="true"
+            fancy:fb_radius="2dp"
+            fancy:fb_textColor="@color/black"
+            fancy:fb_textSize="21sp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="30dp"/>
+    </LinearLayout>
+</LinearLayout>

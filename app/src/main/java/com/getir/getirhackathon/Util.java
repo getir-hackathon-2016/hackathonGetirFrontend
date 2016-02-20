@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.getir.getirhackathon.Objects.ServiceUser;
+import com.getir.getirhackathon.Objects.User;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
@@ -39,6 +40,9 @@ public class Util {
     public static boolean isNetworkEnabled = false;
     public static double longitude = 0;
     public static double latitude = 0;
+    public static double userCurrentLatitude;
+    public static double userCurrentLongitude;
+    public static Socket socket;
 
     public static String SERVER_URL = "http://192.168.1.95:9000";
 
@@ -69,6 +73,10 @@ public class Util {
 
     public static void parseServiceJson(JSONObject jsonObject) {
         ServiceUser.getInstance().initObjectFromJson(jsonObject);
+    }
+
+    public static void parseUserJson(JSONObject jsonObject) {
+        User.getInstance().initObjectFromJson(jsonObject);
     }
 
 

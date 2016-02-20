@@ -12,6 +12,7 @@
     <string name="back_icon">&#xf060;</string>
     <string name="info_icon">&#xf129;</string>
     <string name="phone_icon">&#xf095;</string>
+    <string name="address_icon">&#xf015;</string>
 
     <string name="cancel">İptal</string>
     <string name="open_location_settings">Konum Servisi Ayarları</string>
@@ -25,6 +26,16 @@
     <string name="username">Kullanıcı Adı</string>
     <string name="password">Şifre</string>
     <string name="login">Giriş Yap</string>
+    <string name="my_addresses">Adreslerim</string>
+    <string name="send_your_address">Adresini gönder</string>
+    <string name="send_your_address_desc">En yakınındaki servislere ulaşabilmek için adresini belirt!</string>
+    <string name="send_current_location">Konumunu gönder</string>
+    <string name="send_saved_address">Kayıtlı adres seç</string>
+    <string name="address_name">Adres ismi</string>
+    <string name="address">Adres</string>
+    <string name="town">İlçe</string>
+    <string name="country">İl</string>
+
 
     <string name="languages">Diller</string>
 </resources>

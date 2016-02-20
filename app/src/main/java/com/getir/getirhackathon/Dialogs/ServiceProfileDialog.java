@@ -17,11 +17,11 @@ import mehdi.sakout.fancybuttons.FancyButton;
 /**
  * Created by Emre on 20.02.2016.
  */
-public class ProfileDialog extends Dialog {
+public class ServiceProfileDialog extends Dialog {
     private TextView user_icon_text, name_text, info_text, info_icon, phone_icon, phone_text;
     private Context context;
     private ServiceUser currentServiceUser;
-    public ProfileDialog(Context context) {
+    public ServiceProfileDialog(Context context) {
         super(context);
         this.context = context;
         currentServiceUser = ServiceUser.getInstance();

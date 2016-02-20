@@ -13,6 +13,10 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="login">Log in</string>
+    <string name="my_addresses">My Addresses</string>
+    <string name="send_your_address">Send Your Address</string>
+    <string name="send_your_address_desc">Specify your address to reach nearest service!</string>
+
 
 
     <string name="languages">Languages</string>
