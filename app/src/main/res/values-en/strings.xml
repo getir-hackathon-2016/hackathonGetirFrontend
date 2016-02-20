@@ -8,6 +8,8 @@
     <string name="previous_orders">Previous Orders</string>
     <string name="logout">Logout</string>
     <string name="all">All</string>
+    <string name="choose">Choose</string>
+    <string name="save">Save</string>
 
     <string name="languages">Languages</string>
 </resources>

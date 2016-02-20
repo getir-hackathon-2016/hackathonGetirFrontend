@@ -13,30 +13,30 @@ import android.widget.TextView;
 import com.getir.getirhackathon.Adapters.CategoryGridAdapter;
 import com.getir.getirhackathon.Objects.User;
 import com.getir.getirhackathon.R;
+import com.getir.getirhackathon.Util;
 
 import java.util.ArrayList;
 
 /**
  * Created by Emre on 20.02.2016.
  */
-public class UserMainFragment extends Fragment {
+public class ProfileFragment extends Fragment {
 
-    private GridView gridView;
-    private Spinner spinnerList;
+    private TextView profile_text;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.first_frag, container, false);
-
-        TextView tv = (TextView) v.findViewById(R.id.tvFragFirst);
-        tv.setText(getArguments().getString("msg"));
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.profile_layout, container, false);
+        profile_text = (TextView) v.findViewById(R.id.profile_text);
+        profile_text.setTypeface(Util.getFontAwesome(getActivity()));
 
         return v;
     }
 
-    public static UserMainFragment newInstance(String text) {
+    public static ProfileFragment newInstance(String text) {
 
-        UserMainFragment f = new UserMainFragment();
+        ProfileFragment f = new ProfileFragment();
         Bundle b = new Bundle();
         b.putString("msg", text);
 

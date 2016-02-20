@@ -20,4 +20,16 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
+    <style name="TextAppearence.App.TextInputLayout" parent="@android:style/TextAppearance">
+        <item name="android:textColor">#ffffff</item>
+        <item name="colorControlNormal">#c5c5c5</item>
+        <item name="colorControlActivated">#ffffff</item>
+        <item name="colorControlHighlight">#ffffff</item>
+        <item name="android:textSize">18sp</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
 </resources>

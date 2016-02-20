@@ -2,28 +2,19 @@ package com.getir.getirhackathon;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -31,8 +22,8 @@ import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.ndk.CrashlyticsNdk;
-import com.getir.getirhackathon.Fragments.ProfileFragment;
-import com.getir.getirhackathon.Fragments.UserMainFragment;
+import com.getir.getirhackathon.Dialogs.ProfileDialog;
+import com.getir.getirhackathon.Objects.ServiceUser;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
@@ -45,9 +36,9 @@ import java.net.URISyntaxException;
 
 import io.fabric.sdk.android.Fabric;
 
-public class MainActivity extends Activity {
+public class ServiceMainActivity extends Activity {
 
-    private TextView settings_button, list_button, language_icon, user_icon_text, cart_down_icon, logout_icon, back_button_left_drawer;
+    private TextView settings_button, list_button, language_icon, user_icon_text, cart_down_icon, logout_icon, back_button_left_drawer, name;
     private LinearLayout fragment_container;
     private LinearLayout profileLayout, prevCartLayout, logoutLayout;
     private ImageButton en_button, tr_button;
@@ -86,7 +77,7 @@ public class MainActivity extends Activity {
         Fabric.with(this, new Crashlytics(), new CrashlyticsNdk());
         mContext = this;
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.service_main_layout);
 
         //To initiliaze view.
         initView();
@@ -114,18 +105,6 @@ public class MainActivity extends Activity {
             }
         });
 
-//        settings_button.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//                    settings_button.setTextSize(40);
-//                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-//                    settings_button.setTextSize(30);
-//                }
-//                return true;
-//            }
-//        });
-
         list_button = (TextView) findViewById(R.id.left_drawer_button);
         list_button.setTypeface(Util.getFontAwesome(mContext));
         list_button.setTextColor(getResources().getColor(R.color.blue_light));
@@ -136,6 +115,10 @@ public class MainActivity extends Activity {
                 drawerLayout.openDrawer(leftDrawerLayout);
             }
         });
+
+        name = (TextView) findViewById(R.id.name_text);
+
+        name.setText(ServiceUser.getInstance().getName());
 
         //Right Drawer View
         initRightDrawerView();
@@ -172,6 +155,16 @@ public class MainActivity extends Activity {
         profileLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ProfileDialog profile = new ProfileDialog(mContext);
+                profile.show();
+            }
+        });
+
+        logoutLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                socket.disconnect();
+                finish();
             }
         });
     }
@@ -250,9 +243,7 @@ public class MainActivity extends Activity {
 
         final JSONObject jObject = new JSONObject();
         try {
-            jObject.put("name", "emre alparslan");
-            jObject.put("address", "adres");
-            jObject.put("phone", "055487");
+            jObject.put("courierId", ServiceUser.getInstance().getId());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -263,41 +254,16 @@ public class MainActivity extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        socket.emit("getAvailableCouriers", jObject);
-                        socket.on("sortedCouriersList", new Emitter.Listener() {
-                            @Override
-                            public void call(final Object... args) {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        JSONArray obj = (JSONArray)args[0];
-                                        Log.i("response - sortedCouriersList", obj.toString());
-                                    }
-                                });
-
-                            }
-
-                        });
+                        socket.emit("courierLogin", jObject);
                         Log.i("response", "connected");
                     }
                 });
             }
 
-        }).on("refresh", new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.i("response", "refresh");
-                    }
-                });
-
-            }
-
         }).on(Socket.EVENT_DISCONNECT, new Emitter.Listener() {
             @Override
             public void call(Object... args) {
+                socket.emit("courierLogout", jObject);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

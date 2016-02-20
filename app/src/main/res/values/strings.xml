@@ -9,6 +9,8 @@
     <string name="cart_down">&#xf218;</string>
     <string name="logout_icon">&#xf08b;</string>
     <string name="back_icon">&#xf060;</string>
+    <string name="info_icon">&#xf129;</string>
+    <string name="phone_icon">&#xf095;</string>
 
     <string name="cancel">İptal</string>
     <string name="open_location_settings">Konum Servisi Ayarları</string>
@@ -17,6 +19,8 @@
     <string name="previous_orders">Önceki Siparişlerim</string>
     <string name="logout">Çıkış Yap</string>
     <string name="all">Tümü</string>
+    <string name="choose">Seç</string>
+    <string name="save">Kaydet</string>
 
     <string name="languages">Diller</string>
 </resources>

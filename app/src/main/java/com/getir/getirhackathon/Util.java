@@ -7,6 +7,7 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.getir.getirhackathon.Objects.ServiceUser;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
@@ -53,6 +54,10 @@ public class Util {
             locationProviders = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
             return !TextUtils.isEmpty(locationProviders);
         }
+    }
+
+    public static void parseServiceJson(JSONObject jsonObject){
+        ServiceUser.getInstance().initObjectFromJson(jsonObject);
     }
 
 }
