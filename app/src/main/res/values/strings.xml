@@ -16,6 +16,7 @@
     <string name="profile">Profil</string>
     <string name="previous_orders">Önceki Siparişlerim</string>
     <string name="logout">Çıkış Yap</string>
+    <string name="all">Tümü</string>
 
     <string name="languages">Diller</string>
 </resources>

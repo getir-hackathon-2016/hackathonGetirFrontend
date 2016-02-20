@@ -2,6 +2,8 @@ package com.getir.getirhackathon;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,6 +26,7 @@ import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.ndk.CrashlyticsNdk;
+import com.getir.getirhackathon.Fragments.UserMainFragment;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
@@ -41,6 +44,7 @@ import static com.google.android.gms.internal.zzir.runOnUiThread;
 public class MainActivity extends Activity {
 
     private TextView settings_button, list_button, language_icon, user_icon_text, cart_down_icon, logout_icon, back_button_left_drawer;
+    private LinearLayout fragment_container;
     private LinearLayout profileLayout, prevCartLayout, logoutLayout;
     private ImageButton en_button, tr_button;
     private DrawerLayout drawerLayout;
@@ -129,6 +133,14 @@ public class MainActivity extends Activity {
             }
         });
 
+        //Fragment Container
+        //fragment_container = (RelativeLayout) findViewById(R.id.fragment_container);
+
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        UserMainFragment userMainFragment = new UserMainFragment();
+        fragmentTransaction.add(R.id.fragment_container, userMainFragment, "UserMainFragment");
+        fragmentTransaction.commit();
 
         //Right Drawer View
         initRightDrawerView();
