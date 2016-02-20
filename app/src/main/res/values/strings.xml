@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">getirHackathon</string>
+
+    <string name="settings_icon">&#xf013;</string>
+    <string name="location_icon">&#xf124;</string>
+    <string name="list_icon">&#xf0ca;</string>
+
+    <string name="cancel">İptal</string>
+    <string name="open_location_settings">Konum Servisi Ayarları</string>
+    <string name="location_service_not_enabled">Konum Servisleri devre dışı!</string>
+
+    <string name="languages">Diller</string>
+</resources>
