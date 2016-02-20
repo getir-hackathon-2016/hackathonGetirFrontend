@@ -40,7 +40,7 @@ import static com.google.android.gms.internal.zzir.runOnUiThread;
 
 public class MainActivity extends Activity {
 
-    private TextView settings_button, list_button, language_icon, user_icon_text, cart_down_icon, logout_icon;
+    private TextView settings_button, list_button, language_icon, user_icon_text, cart_down_icon, logout_icon, back_button_left_drawer;
     private LinearLayout profileLayout, prevCartLayout, logoutLayout;
     private ImageButton en_button, tr_button;
     private DrawerLayout drawerLayout;
@@ -151,6 +151,16 @@ public class MainActivity extends Activity {
         profileLayout = (LinearLayout) findViewById(R.id.profile_layout);
         prevCartLayout = (LinearLayout) findViewById(R.id.prev_cart_layout);
         logoutLayout = (LinearLayout) findViewById(R.id.logout_layout);
+
+        //back button
+        back_button_left_drawer = (TextView) findViewById(R.id.back_button_left_drawer);
+        back_button_left_drawer.setTypeface(Util.getFontAwesome(mContext));
+        back_button_left_drawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.closeDrawer(leftDrawerLayout);
+            }
+        });
     }
 
     private void initRightDrawerView(){
