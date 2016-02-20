@@ -43,5 +43,6 @@ public class ProfileDialog extends Dialog {
 
         name_text.setText(currentServiceUser.getName());
         info_text.setText(currentServiceUser.getInfo());
+        phone_text.setText(String.valueOf(currentServiceUser.getPhone()));
     }
 }

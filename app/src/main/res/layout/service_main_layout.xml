@@ -9,6 +9,7 @@
     android:background="#620b38"
     android:gravity="center">
 
+    <!--
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -38,7 +39,7 @@
             android:textSize="30sp"
             android:textColor="#000000"/>
 
-        <!--<LinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -74,8 +75,42 @@
                 fancy:fb_textColor="#ff8400"
                 fancy:fb_textSize="21sp" />
 
-        </LinearLayout> -->
+        </LinearLayout>
 
+    </RelativeLayout> -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/map"
+            tools:context=".MapsActivity"
+            android:name="com.google.android.gms.maps.SupportMapFragment" />
+
+        <TextView
+            android:id="@+id/left_drawer_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/list_icon"
+            android:textSize="26sp"/>
+
+        <TextView
+            android:id="@+id/settings_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/settings_icon"
+            android:textSize="30sp"/>
     </RelativeLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -83,12 +118,13 @@
         android:layout_width="275dp"
         android:layout_height="match_parent"
         android:layout_gravity="right"
-        android:background="@color/blue_light">
+        android:background="@color/black">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -101,8 +137,7 @@
                     android:textSize="24sp"
                     android:text="@string/language_icon"
                     android:id="@+id/language_icon"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="#000000"/>
+                    android:layout_marginLeft="10dp"/>
 
                 <TextView
                     android:id="@+id/languages_text"
@@ -110,8 +145,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/languages"
                     android:layout_marginLeft="10dp"
-                    android:textSize="24sp"
-                    android:textColor="#000000"/>
+                    android:textSize="24sp"/>
 
             </LinearLayout>
 
@@ -137,6 +171,22 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/versionBuild"
+                    android:textSize="20sp"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </RelativeLayout>
@@ -146,7 +196,7 @@
         android:layout_width="275dp"
         android:layout_height="match_parent"
         android:layout_gravity="left"
-        android:background="@color/blue_light"
+        android:background="@color/gray"
         android:gravity="center">
 
         <TextView
@@ -158,8 +208,7 @@
             android:text="@string/back_icon"
             android:textSize="30sp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:textColor="#000000"/>
+            android:layout_marginTop="10dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -180,16 +229,14 @@
                     android:textSize="24sp"
                     android:layout_marginLeft="10dp"
                     android:text="@string/user_icon"
-                    android:id="@+id/user_icon_text"
-                    android:textColor="#000000"/>
+                    android:id="@+id/user_icon_text"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:text="@string/profile"
-                    android:textSize="24sp"
-                    android:textColor="#000000"/>
+                    android:textSize="24sp"/>
 
             </LinearLayout>
 
@@ -206,16 +253,14 @@
                     android:textSize="24sp"
                     android:layout_marginLeft="10dp"
                     android:text="@string/cart_down"
-                    android:id="@+id/cart_down_icon"
-                    android:textColor="#000000"/>
+                    android:id="@+id/cart_down_icon"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:text="@string/previous_orders"
-                    android:textSize="24sp"
-                    android:textColor="#000000"/>
+                    android:textSize="24sp"/>
 
             </LinearLayout>
 
@@ -232,16 +277,14 @@
                     android:textSize="24sp"
                     android:layout_marginLeft="10dp"
                     android:text="@string/logout_icon"
-                    android:id="@+id/logout_icon"
-                    android:textColor="#000000"/>
+                    android:id="@+id/logout_icon"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:text="@string/logout"
-                    android:textSize="24sp"
-                    android:textColor="#000000"/>
+                    android:textSize="24sp"/>
 
             </LinearLayout>
 
