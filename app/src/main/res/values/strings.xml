@@ -35,6 +35,9 @@
     <string name="address">Adres</string>
     <string name="town">İlçe</string>
     <string name="country">İl</string>
+    <string name="minute">dk</string>
+    <string name="meters">mt</string>
+
 
 
     <string name="languages">Diller</string>

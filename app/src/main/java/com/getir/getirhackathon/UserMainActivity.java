@@ -54,7 +54,7 @@ public class UserMainActivity extends Activity{
     private RelativeLayout rightDrawerLayout, leftDrawerLayout;
     private Context mContext;
     private Socket socket;
-    private ArrayList<ServiceUser> serviceUsers;
+    private List<ServiceUser> serviceUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,15 +108,6 @@ public class UserMainActivity extends Activity{
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
-
-        ArrayList<String> myDataset = new ArrayList<>();
-        myDataset.add("emre");
-        myDataset.add("asda");
-        myDataset.add("23123");
-
-        // specify an adapter (see also next example)
-        mAdapter = new MyAdapter(myDataset);
-        recyclerView.setAdapter(mAdapter);
 
         //Right Drawer View
         initRightDrawerView();
@@ -300,7 +291,7 @@ public class UserMainActivity extends Activity{
                             }
                         }
                         Log.i("couriers", serviceUsers.toString());
-                        //fillRecyclerView();
+                        fillRecyclerView();
                     }
                 });
             }
@@ -332,6 +323,9 @@ public class UserMainActivity extends Activity{
     }
 
     private void fillRecyclerView(){
-
+        Util.sortServiceUsers(serviceUsers);
+        // specify an adapter (see also next example)
+        mAdapter = new MyAdapter(serviceUsers, mContext);
+        recyclerView.setAdapter(mAdapter);
     }
 }

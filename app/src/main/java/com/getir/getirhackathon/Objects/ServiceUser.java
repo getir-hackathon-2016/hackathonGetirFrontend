@@ -15,13 +15,15 @@ import java.util.ArrayList;
  * Created by Emre on 20.02.2016.
  */
 public class ServiceUser implements Serializable{
-    String id, name, info;
-    int phone;
-    double longitude;
-    double latitude;
-    Price price;
-    Category category;
+    public String id, name, info, categoryStr;
+    public int phone;
+    public double longitude;
+    public double latitude;
+    public Price price;
+    public Category category;
+    public Distance distance;
     public static ServiceUser instance;
+
 
     public static ServiceUser getInstance() {
         if (instance == null) {
@@ -60,7 +62,11 @@ public class ServiceUser implements Serializable{
             serviceUser.longitude = jObject.getDouble("longitude");
             serviceUser.latitude = jObject.getDouble("latitude");
             //serviceUser.category = Category.objectFromJson(jObject.getJSONObject("category"));
+            serviceUser.categoryStr = jObject.getString("category");
             serviceUser.price = Price.objectFromJson(jObject.getJSONObject("price"));
+            if(jObject.has("distance")){
+                serviceUser.distance = Distance.objectFromJson(jObject.getJSONObject("distance"));
+            }
         }catch (JSONException e) {
             Log.e("ServiceUser", e.getLocalizedMessage());
             Crashlytics.log("ServiceUser - try/catch");
@@ -134,5 +140,21 @@ public class ServiceUser implements Serializable{
 
     public static void setInstance(ServiceUser instance) {
         ServiceUser.instance = instance;
+    }
+
+    public String getCategoryStr() {
+        return categoryStr;
+    }
+
+    public void setCategoryStr(String categoryStr) {
+        this.categoryStr = categoryStr;
+    }
+
+    public Distance getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Distance distance) {
+        this.distance = distance;
     }
 }

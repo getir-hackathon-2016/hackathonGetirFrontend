@@ -23,7 +23,11 @@ import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 import static com.google.android.gms.internal.zzir.runOnUiThread;
 
@@ -77,6 +81,24 @@ public class Util {
 
     public static void parseUserJson(JSONObject jsonObject) {
         User.getInstance().initObjectFromJson(jsonObject);
+    }
+
+    //sortServiceUsers is a function that takes an ServiceUser List and sorts it ascending.
+    public static void sortServiceUsers(List<ServiceUser> array){
+        Collections.sort(array, new Comparator<ServiceUser>() {
+            @Override
+            public int compare(ServiceUser lhs, ServiceUser rhs) {
+                int leftHandSideDuration = lhs.getDistance().getDurationInSeconds();
+                int rightHandSideDuration = rhs.getDistance().getDurationInSeconds();
+                if(leftHandSideDuration < rightHandSideDuration){
+                    return -1;
+                }else if(leftHandSideDuration == rightHandSideDuration){
+                    return 0;
+                }else{
+                    return 1;
+                }
+            }
+        });
     }
 
 

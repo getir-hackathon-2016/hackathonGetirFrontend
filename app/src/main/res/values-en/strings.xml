@@ -16,6 +16,14 @@
     <string name="my_addresses">My Addresses</string>
     <string name="send_your_address">Send Your Address</string>
     <string name="send_your_address_desc">Specify your address to reach nearest service!</string>
+    <string name="send_current_location">Send Your Location</string>
+    <string name="send_saved_address">Choose an existing address</string>
+    <string name="address_name">Address Title</string>
+    <string name="address">Address</string>
+    <string name="town">Town</string>
+    <string name="country">Country</string>
+    <string name="minute">min</string>
+    <string name="meters">meters</string>
 
 
 
