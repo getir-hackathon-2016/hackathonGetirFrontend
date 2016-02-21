@@ -77,8 +77,6 @@ public class ServiceMainActivity extends FragmentActivity implements OnMapReadyC
     private final LocationListener mLocationListener = new LocationListener() {
         @Override
         public void onLocationChanged(final Location location) {
-            //location_text.setText(String.valueOf(location.getLatitude()) + "-" + String.valueOf(location.getLongitude()));
-
         }
 
         @Override
@@ -304,6 +302,7 @@ public class ServiceMainActivity extends FragmentActivity implements OnMapReadyC
             socket = IO.socket(Util.BASE_URL, opts);
         } catch (URISyntaxException e) {
             e.printStackTrace();
+            Crashlytics.log("startSocket" + "-" + e.getLocalizedMessage());
         }
 
         final JSONObject jObject = new JSONObject();
@@ -313,6 +312,7 @@ public class ServiceMainActivity extends FragmentActivity implements OnMapReadyC
             jObject.put("courierId", ServiceUser.getInstance().getId());
         } catch (JSONException e) {
             e.printStackTrace();
+            Crashlytics.log("startSocket" + "-" + e.getLocalizedMessage());
         }
 
         socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
@@ -361,6 +361,7 @@ public class ServiceMainActivity extends FragmentActivity implements OnMapReadyC
                             usersLoc = new LatLng(llatitude, llongitude);
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Crashlytics.log("offerFromUser" + "-" + e.getLocalizedMessage());
                         }
                         mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(
                                 R.id.map)).getMap();
@@ -373,32 +374,15 @@ public class ServiceMainActivity extends FragmentActivity implements OnMapReadyC
                                 object.put("userId", userId);
                             }catch (JSONException e){
                                 Log.e("offerFromUser", e.getLocalizedMessage());
+                                Crashlytics.log("offerFromUser" + "-" + e.getLocalizedMessage());
                             }
                         }
                         socket.emit("acceptedByCourier", object);
                     }
                 });
-
-            }
-
-        }).on("debug", new Emitter.Listener() {
-            @Override
-            public void call(final Object... args) {
-                Log.i("debug" , "entered");
-                //socket.emit("courierLogout", jObject);
-                //mMap.addMarker(new MarkerOptions().position(usersLoc).title("User Location"));
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.i("debug" , "entered");
-                    }
-                });
-
             }
 
         });
-
-
         socket.connect();
     }
 
@@ -554,6 +538,7 @@ public class ServiceMainActivity extends FragmentActivity implements OnMapReadyC
                 jObject.put("latitude", latitude);
             } catch (JSONException e) {
                 e.printStackTrace();
+                Crashlytics.log("emitCurrentLocation" + "-" + e.getLocalizedMessage());
             }
             socket.emit("courierLocation", jObject);
             Log.i("courierLocation", jObject.toString());

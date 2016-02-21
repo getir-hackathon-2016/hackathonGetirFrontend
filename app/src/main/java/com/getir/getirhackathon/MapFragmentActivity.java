@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.crashlytics.android.Crashlytics;
 import com.getir.getirhackathon.Dialogs.CurrentLocationAddDialog;
 import com.getir.getirhackathon.Objects.Address;
 import com.getir.getirhackathon.Objects.User;
@@ -74,6 +75,7 @@ public class MapFragmentActivity extends FragmentActivity implements OnMapReadyC
                         jObject.put("longitude", longitude);
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        Crashlytics.log("MapGragment - OnCreate" + "-" + e.getLocalizedMessage());
                     }
                     Util.socket.emit("getAvailableCouriers", jObject);
                 }

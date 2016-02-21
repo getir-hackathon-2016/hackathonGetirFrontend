@@ -51,12 +51,12 @@ public class Util {
     public static final String BASE_URL = "https://fixitt.herokuapp.com";
     public static String BASE_URL1 = "http://192.168.1.56:9000";
 
-    //
+    //to get TypeFace of fontAwesome fonts!
     public static Typeface getFontAwesome(Context context) {
         Typeface fontAwesome = Typeface.createFromAsset(context.getAssets(), "fontawesome-webfont.ttf");
         return fontAwesome;
     }
-
+    //to check phone'S location permissions
     public static boolean isLocationEnabled(Context context) {
         int locationMode = 0;
         String locationProviders;
@@ -77,10 +77,12 @@ public class Util {
         }
     }
 
+    //to parse JSONObject to ServiceUser
     public static void parseServiceJson(JSONObject jsonObject) {
         ServiceUser.getInstance().initObjectFromJson(jsonObject);
     }
 
+    //to parse JSONObject to User
     public static void parseUserJson(JSONObject jsonObject) {
         User.getInstance().initObjectFromJson(jsonObject);
     }

@@ -23,6 +23,7 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 import io.fabric.sdk.android.Fabric;
+import io.fabric.sdk.android.services.common.Crash;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 /**
@@ -72,6 +73,8 @@ public class SplashActivity extends FragmentActivity {
                     RestClient.get("/api/users/login/" + password + "/" + username, new JsonHttpResponseHandler() {
                         @Override
                         public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                            Log.i("get", "Failure");
+                            Crashlytics.log("RestClient" + "-" + statusCode);
                         }
 
                         @Override
@@ -91,6 +94,7 @@ public class SplashActivity extends FragmentActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("RestClient.get()", e.getLocalizedMessage());
+                    Crashlytics.log("RestClient" + "-" + e.getLocalizedMessage());
                 }
             }
         });

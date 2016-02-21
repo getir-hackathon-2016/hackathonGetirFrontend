@@ -244,6 +244,7 @@ public class UserMainActivity extends Activity{
             Util.socket = IO.socket(Util.BASE_URL, opts);
         } catch (URISyntaxException e) {
             e.printStackTrace();
+            Crashlytics.log("startSocket" + "-" + e.getLocalizedMessage());
         }
 
         final JSONObject jObject = new JSONObject();
@@ -251,6 +252,7 @@ public class UserMainActivity extends Activity{
             jObject.put("id", User.getInstance().getId());
         } catch (JSONException e) {
             e.printStackTrace();
+            Crashlytics.log("startSocket" + "-" + e.getLocalizedMessage());
         }
 
         Util.socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {

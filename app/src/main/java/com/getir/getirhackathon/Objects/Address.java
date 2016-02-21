@@ -1,5 +1,7 @@
 package com.getir.getirhackathon.Objects;
 
+import com.crashlytics.android.Crashlytics;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,6 +29,7 @@ public class Address implements Serializable {
             adress.longitude = jsonObject.getDouble("longitude");
         }catch (JSONException e){
             e.printStackTrace();
+            Crashlytics.log("Address - objectFromJson" + "-" + e.getLocalizedMessage());
         }
         return adress;
     }
