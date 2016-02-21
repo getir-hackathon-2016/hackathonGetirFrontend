@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,7 +28,7 @@ import mehdi.sakout.fancybuttons.FancyButton;
 /**
  * Created by Emre on 20.02.2016.
  */
-public class SplashActivity extends Activity {
+public class SplashActivity extends FragmentActivity {
 
     private Context mContext;
     private ImageButton logo;

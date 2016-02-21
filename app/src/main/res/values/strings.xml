@@ -13,6 +13,8 @@
     <string name="info_icon">&#xf129;</string>
     <string name="phone_icon">&#xf095;</string>
     <string name="address_icon">&#xf015;</string>
+    <string name="scan_icon">&#xf002;</string>
+    <string name="tick_icon">&#xf00c;</string>
 
     <string name="cancel">İptal</string>
     <string name="open_location_settings">Konum Servisi Ayarları</string>
@@ -37,8 +39,8 @@
     <string name="country">İl</string>
     <string name="minute">dk</string>
     <string name="meters">mt</string>
-
-
-
     <string name="languages">Diller</string>
+    <string name="scan_for_couriers">Yakındaki Hizmetleri Ara</string>
+    <string name="finish_task">İş Bitti</string>
+
 </resources>

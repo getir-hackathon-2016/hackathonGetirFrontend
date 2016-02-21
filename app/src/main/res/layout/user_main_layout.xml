@@ -88,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
             android:id="@+id/spinner"/>
 
         <android.support.v7.widget.RecyclerView
@@ -96,7 +96,10 @@
             android:scrollbars="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="75dp"/>
+            android:layout_marginTop="90dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="90dp"/>
 
         <TextView
             android:id="@+id/left_drawer_button"
@@ -153,7 +156,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/languages"
                     android:layout_marginLeft="10dp"
-                    android:textSize="24sp"/>
+                    android:textSize="24sp"
+                    android:textColor="@color/black"/>
 
             </LinearLayout>
 
@@ -244,6 +248,29 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:text="@string/profile"
+                    android:textSize="24sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/scan_for_couriers">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/scan_icon"
+                    android:id="@+id/scan_icon"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/scan_for_couriers"
                     android:textSize="24sp"/>
 
             </LinearLayout>

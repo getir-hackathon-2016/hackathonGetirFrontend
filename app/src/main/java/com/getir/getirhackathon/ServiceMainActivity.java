@@ -339,6 +339,54 @@ public class ServiceMainActivity extends FragmentActivity implements OnMapReadyC
 
             }
 
+        }).on("offerFromUser", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                socket.emit("courierLogout", jObject);
+                JSONObject jsonObject = (JSONObject) args[0];
+                String offerCourierId = "";
+                String userId = "";
+                double longitude = 0;
+                double latitude = 0;
+                try {
+                    offerCourierId = jsonObject.getString("courierId");
+                    userId = jsonObject.getString("userId");
+                    longitude = jObject.getDouble("longitude");
+                    latitude = jObject.getDouble("latitude");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                LatLng currentLoc = new LatLng(latitude, longitude);
+                mMap.addMarker(new MarkerOptions().position(currentLoc).title("Current Location"));
+                //mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLoc));
+                CameraPosition cameraPosition = new CameraPosition.Builder()
+                        .target(currentLoc)      // Sets the center of the map to location user
+                        .zoom(14)                   // Sets the zoom
+                        //.bearing(90)                // Sets the orientation of the camera to east
+                        //.tilt(40)                   // Sets the tilt of the camera to 30 degrees
+                        .build();                   // Creates a CameraPosition from the builder
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+                if(offerCourierId.equals(ServiceUser.getInstance().getId())){
+                    JSONObject object = new JSONObject();
+                    try{
+                        object.put("courierId", offerCourierId);
+                        object.put("userId", userId);
+                    }catch (JSONException e){
+                        Log.e("offerFromUser", e.getLocalizedMessage());
+                    }
+
+                    socket.emit("acceptedByCourier", object);
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.i("response", "disconnected");
+                    }
+                });
+
+            }
+
         });
         socket.connect();
     }

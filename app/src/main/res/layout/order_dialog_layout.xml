@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="200dip">
+
+    <Chronometer
+        android:id="@+id/chronometer1"
+        android:textColor="#4169E1"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button5"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:text="Chronometer"
+        android:layout_gravity="center"/>
+
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/button_finish"
+        android:layout_width="150dip"
+        android:layout_height="65dip"
+        fancy:fb_text="@string/finish_task"
+        fancy:fb_borderColor="@color/blue_light"
+        fancy:fb_iconFont="@string/tick_icon"
+        fancy:fb_borderWidth="2dp"
+        fancy:fb_ghost="true"
+        fancy:fb_radius="2dp"
+        fancy:fb_textColor="@color/blue_light"
+        fancy:fb_textSize="21sp"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"/>
+
+
+</LinearLayout>

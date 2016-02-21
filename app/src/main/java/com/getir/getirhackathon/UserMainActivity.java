@@ -3,12 +3,14 @@ package com.getir.getirhackathon;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -34,18 +36,19 @@ import org.json.JSONObject;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import io.fabric.sdk.android.Fabric;
 
 public class UserMainActivity extends Activity{
 
     private TextView settings_button, list_button, language_icon, user_icon_text, cart_down_icon, logout_icon, back_button_left_drawer, name, languages_text;
-    private TextView versionBuild, address_icon;
+    private TextView versionBuild, address_icon, scan_icon, scan;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private Spinner spinner;
-    private LinearLayout profileLayout, prevCartLayout, logoutLayout, adresses_layout;
+    private LinearLayout profileLayout, prevCartLayout, logoutLayout, adresses_layout, scan_for_couriers;
     private ImageButton en_button, tr_button;
     private DrawerLayout drawerLayout;
     private RelativeLayout rightDrawerLayout, leftDrawerLayout;
@@ -62,12 +65,8 @@ public class UserMainActivity extends Activity{
 
         setContentView(R.layout.user_main_layout);
 
-        SendAddressDialog dialog = new SendAddressDialog(mContext);
-        dialog.show();
-
         //To initiliaze view.
         initView();
-
         //Start socketIO
         startSocket();
     }
@@ -95,6 +94,7 @@ public class UserMainActivity extends Activity{
             @Override
             public void onClick(View v) {
                 drawerLayout.openDrawer(leftDrawerLayout);
+
             }
         });
 
@@ -131,10 +131,24 @@ public class UserMainActivity extends Activity{
         address_icon.setTypeface(Util.getFontAwesome(mContext));
         address_icon.setTextColor(mContext.getResources().getColor(R.color.blue_light));
 
+        scan_icon = (TextView) findViewById(R.id.scan_icon);
+        scan_icon.setTypeface(Util.getFontAwesome(mContext));
+        scan_icon.setTextColor(mContext.getResources().getColor(R.color.blue_light));
+
         profileLayout = (LinearLayout) findViewById(R.id.profile_layout);
         prevCartLayout = (LinearLayout) findViewById(R.id.prev_cart_layout);
         logoutLayout = (LinearLayout) findViewById(R.id.logout_layout);
         adresses_layout = (LinearLayout) findViewById(R.id.adresses_layout);
+        scan_for_couriers = (LinearLayout) findViewById(R.id.scan_for_couriers);
+
+        scan_for_couriers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.closeDrawer(leftDrawerLayout);
+                SendAddressDialog dialog = new SendAddressDialog(mContext);
+                dialog.show();
+            }
+        });
 
         adresses_layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,12 +188,7 @@ public class UserMainActivity extends Activity{
         spinner = (Spinner) findViewById(R.id.spinner);
 
         List<String> categories = new ArrayList<String>();
-        categories.add("Automobile");
-        categories.add("Business Services");
-        categories.add("Computers");
-        categories.add("Education");
-        categories.add("Personal");
-        categories.add("Travel");
+        categories.add(getResources().getString(R.string.all));
 
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
@@ -204,8 +213,11 @@ public class UserMainActivity extends Activity{
             @Override
             public void onClick(View v) {
                 drawerLayout.closeDrawer(rightDrawerLayout);
-
-                //
+                Locale locale = new Locale("en");
+                Locale.setDefault(locale);
+                Configuration c = new Configuration(getResources().getConfiguration());
+                c.locale = locale;
+                getResources().updateConfiguration(c, getResources().getDisplayMetrics());
             }
         });
 
@@ -213,7 +225,11 @@ public class UserMainActivity extends Activity{
             @Override
             public void onClick(View v) {
                 drawerLayout.closeDrawer(rightDrawerLayout);
-
+                Locale locale = new Locale("tr");
+                Locale.setDefault(locale);
+                Configuration c = new Configuration(getResources().getConfiguration());
+                c.locale = locale;
+                getResources().updateConfiguration(c, getResources().getDisplayMetrics());
                 //
             }
         });

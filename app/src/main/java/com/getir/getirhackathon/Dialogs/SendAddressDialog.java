@@ -25,7 +25,7 @@ public class SendAddressDialog extends Dialog {
     public SendAddressDialog(final Context context) {
         super(context);
         this.context = context;
-        setCanceledOnTouchOutside(false);
+        setCanceledOnTouchOutside(true);
 
         setContentView(R.layout.send_adress_layout);
         send_saved_address = (FancyButton) findViewById(R.id.send_saved_address);

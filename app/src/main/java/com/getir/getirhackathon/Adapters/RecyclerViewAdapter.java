@@ -1,14 +1,17 @@
 package com.getir.getirhackathon.Adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
+import com.getir.getirhackathon.Dialogs.OrderDialog;
 import com.getir.getirhackathon.Objects.ServiceUser;
 import com.getir.getirhackathon.Objects.User;
 import com.getir.getirhackathon.R;
@@ -33,6 +36,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public TextView price;
         public TextView duration;
         public TextView distance;
+        public RelativeLayout relative_layout;
 
         public ViewHolder(View v) {
             super(v);
@@ -41,6 +45,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             price = (TextView) v.findViewById(R.id.price);
             duration = (TextView) v.findViewById(R.id.duration);
             distance = (TextView) v.findViewById(R.id.distance);
+            relative_layout = (RelativeLayout) v.findViewById(R.id.relative_layout);
         }
     }
 
@@ -74,7 +79,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         final String name = mDataset.get(position).getName();
@@ -87,7 +92,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View v) {
                 //sendOrder();
-                sendOrder(mDataset.get(position));
+                if(sendOrder(mDataset.get(position))){
+                    //holder.relative_layout.setBackgroundColor(Color.GREEN);
+                }
             }
         });
 
@@ -99,11 +106,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return mDataset.size();
     }
 
-    public void sendOrder(ServiceUser courier) {
+    public boolean sendOrder(ServiceUser courier) {
         final JSONObject jObject = new JSONObject();
         try {
             jObject.put("userId", User.getInstance().getId());
             jObject.put("courierId", courier.getId());
+            jObject.put("longitude", User.getInstance().getLongitude());
+            jObject.put("latitude", User.getInstance().getLatitude());
         } catch (JSONException e) {
             e.printStackTrace();
             Log.e("newOrder", e.getLocalizedMessage());
@@ -111,7 +120,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
         if (Util.socket != null) {
             Util.socket.emit("newOrder", jObject);
+            OrderDialog dialog = new OrderDialog(context, courier.getId());
+            dialog.show();
             Log.i("newOrder", jObject.toString());
+            return true;
+        }else{
+            return false;
         }
 
     }

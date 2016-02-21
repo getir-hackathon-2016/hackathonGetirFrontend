@@ -53,6 +53,6 @@
             fancy:fb_textColor="@color/black"
             fancy:fb_textSize="21sp"
             android:layout_marginTop="30dp"
-            android:layout_marginLeft="30dp"/>
+            android:layout_marginLeft="10dp"/>
     </LinearLayout>
 </LinearLayout>
