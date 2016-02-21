@@ -5,16 +5,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.getir.getirhackathon.Adapters.CategoryGridAdapter;
-import com.getir.getirhackathon.Objects.User;
 import com.getir.getirhackathon.R;
-
-import java.util.ArrayList;
 
 /**
  * Created by Emre on 20.02.2016.

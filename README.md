@@ -61,6 +61,10 @@ compile 'com.loopj.android:android-async-http:1.4.9'
 compile 'com.android.support:recyclerview-v7:23.1.1'
 ```
 
+* FontAwesome
+
+https://fortawesome.github.io/Font-Awesome/
+
 
 ##Backend Repo
 https://github.com/getir-hackathon-2016/hackathonGetirBackend
