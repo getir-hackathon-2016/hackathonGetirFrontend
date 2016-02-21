@@ -5,7 +5,6 @@ Getir Hackathon Frontend - Android
 Emre Alparslan (Frontend - Android)
 Serhan Öztekin (Backend)
 
-http://s27.postimg.org/r1uw697df/logo_150.png
 ![Fixitt](http://s27.postimg.org/r1uw697df/logo_150.png)
 
 #What is Fixitt?
