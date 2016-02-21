@@ -55,7 +55,7 @@ public class ServiceUser implements Serializable{
     public static ServiceUser objectFromJson(JSONObject jObject){
         ServiceUser serviceUser = new ServiceUser();
         try{
-            //serviceUser.id = jObject.getString("_id");
+            serviceUser.id = jObject.getString("_id");
             serviceUser.name = jObject.getString("name");
             serviceUser.info = jObject.getString("info");
             serviceUser.phone = jObject.getInt("phone");

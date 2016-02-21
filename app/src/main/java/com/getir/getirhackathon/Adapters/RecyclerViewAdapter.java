@@ -1,20 +1,25 @@
 package com.getir.getirhackathon.Adapters;
 
-import android.app.Service;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.getir.getirhackathon.Objects.ServiceUser;
+import com.getir.getirhackathon.Objects.User;
 import com.getir.getirhackathon.R;
+import com.getir.getirhackathon.Util;
 
-import java.util.ArrayList;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     private List<ServiceUser> mDataset;
     private Context context;
 
@@ -51,15 +56,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(List<ServiceUser> myDataset, Context context) {
+    public RecyclerViewAdapter(List<ServiceUser> myDataset, Context context) {
         mDataset = myDataset;
         this.context = context;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                   int viewType) {
+    public RecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                             int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rowlayout, parent, false);
         // set the view's size, margins, paddings and layout parameters
@@ -69,19 +74,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         final String name = mDataset.get(position).getName();
         holder.txtHeader.setText(mDataset.get(position).getName());
         holder.txtFooter.setText(mDataset.get(position).getInfo());
         holder.price.setText(String.valueOf(mDataset.get(position).getPrice().getTl()));
-        holder.duration.setText(String.valueOf(mDataset.get(position).getDistance().getDurationInSeconds()/60 + context.getResources().getString(R.string.minute)));
-        holder.duration.setText(String.valueOf(mDataset.get(position).getDistance().getDistanceInCentimeters()/100 + context.getResources().getString(R.string.meters)));
+        holder.duration.setText(String.valueOf(mDataset.get(position).getDistance().getDurationInSeconds() / 60 + context.getResources().getString(R.string.minute)));
+        holder.duration.setText(String.valueOf(mDataset.get(position).getDistance().getDistanceInCentimeters() / 100 + context.getResources().getString(R.string.meters)));
         holder.txtHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //remove(name);
+                //sendOrder();
+                sendOrder(mDataset.get(position));
             }
         });
 
@@ -91,6 +97,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return mDataset.size();
+    }
+
+    public void sendOrder(ServiceUser courier) {
+        final JSONObject jObject = new JSONObject();
+        try {
+            jObject.put("userId", User.getInstance().getId());
+            jObject.put("courierId", courier.getId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.e("newOrder", e.getLocalizedMessage());
+            Crashlytics.log("newOrder" + "-" + e.getLocalizedMessage());
+        }
+        if (Util.socket != null) {
+            Util.socket.emit("newOrder", jObject);
+            Log.i("newOrder", jObject.toString());
+        }
+
     }
 
 }

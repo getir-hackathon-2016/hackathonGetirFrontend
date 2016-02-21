@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -19,10 +18,8 @@ import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.ndk.CrashlyticsNdk;
-import com.getir.getirhackathon.Adapters.CategoryGridAdapter;
-import com.getir.getirhackathon.Adapters.MyAdapter;
+import com.getir.getirhackathon.Adapters.RecyclerViewAdapter;
 import com.getir.getirhackathon.Dialogs.SendAddressDialog;
-import com.getir.getirhackathon.Dialogs.ServiceProfileDialog;
 import com.getir.getirhackathon.Dialogs.UserProfileDialog;
 import com.getir.getirhackathon.Objects.ServiceUser;
 import com.getir.getirhackathon.Objects.User;
@@ -325,7 +322,7 @@ public class UserMainActivity extends Activity{
     private void fillRecyclerView(){
         Util.sortServiceUsers(serviceUsers);
         // specify an adapter (see also next example)
-        mAdapter = new MyAdapter(serviceUsers, mContext);
+        mAdapter = new RecyclerViewAdapter(serviceUsers, mContext);
         recyclerView.setAdapter(mAdapter);
     }
 }
