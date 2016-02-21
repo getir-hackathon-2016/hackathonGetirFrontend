@@ -27,6 +27,7 @@ import com.crashlytics.android.ndk.CrashlyticsNdk;
 import com.getir.getirhackathon.Dialogs.ServiceProfileDialog;
 import com.getir.getirhackathon.Objects.ServiceUser;
 import com.github.nkzawa.emitter.Emitter;
+import com.github.nkzawa.engineio.client.transports.WebSocket;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 import com.google.android.gms.common.ConnectionResult;
@@ -57,6 +58,7 @@ public class ServiceMainActivity extends FragmentActivity implements OnMapReadyC
     private DrawerLayout drawerLayout;
     private RelativeLayout rightDrawerLayout, leftDrawerLayout;
     private Context mContext;
+    private CameraPosition cameraPosition;
 
     private LocationManager mLocationManager;
     private Location mLastLocation;
@@ -296,9 +298,10 @@ public class ServiceMainActivity extends FragmentActivity implements OnMapReadyC
     private void startSocket() {
         IO.Options opts = new IO.Options();
         opts.forceNew = true;
+        //opts.transports = new String[]{WebSocket.NAME};
 
         try {
-            socket = IO.socket(Util.SERVER_URL, opts);
+            socket = IO.socket(Util.BASE_URL, opts);
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -311,8 +314,6 @@ public class ServiceMainActivity extends FragmentActivity implements OnMapReadyC
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
 
         socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
             @Override
@@ -341,53 +342,63 @@ public class ServiceMainActivity extends FragmentActivity implements OnMapReadyC
 
         }).on("offerFromUser", new Emitter.Listener() {
             @Override
-            public void call(Object... args) {
-                socket.emit("courierLogout", jObject);
-                JSONObject jsonObject = (JSONObject) args[0];
-                String offerCourierId = "";
-                String userId = "";
-                double longitude = 0;
-                double latitude = 0;
-                try {
-                    offerCourierId = jsonObject.getString("courierId");
-                    userId = jsonObject.getString("userId");
-                    longitude = jObject.getDouble("longitude");
-                    latitude = jObject.getDouble("latitude");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                LatLng currentLoc = new LatLng(latitude, longitude);
-                mMap.addMarker(new MarkerOptions().position(currentLoc).title("Current Location"));
-                //mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLoc));
-                CameraPosition cameraPosition = new CameraPosition.Builder()
-                        .target(currentLoc)      // Sets the center of the map to location user
-                        .zoom(14)                   // Sets the zoom
-                        //.bearing(90)                // Sets the orientation of the camera to east
-                        //.tilt(40)                   // Sets the tilt of the camera to 30 degrees
-                        .build();                   // Creates a CameraPosition from the builder
-                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
-                if(offerCourierId.equals(ServiceUser.getInstance().getId())){
-                    JSONObject object = new JSONObject();
-                    try{
-                        object.put("courierId", offerCourierId);
-                        object.put("userId", userId);
-                    }catch (JSONException e){
-                        Log.e("offerFromUser", e.getLocalizedMessage());
-                    }
-
-                    socket.emit("acceptedByCourier", object);
-                }
+            public void call(final Object... args) {
+                //socket.emit("courierLogout", jObject);
+                //mMap.addMarker(new MarkerOptions().position(usersLoc).title("User Location"));
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         Log.i("response", "disconnected");
+                        JSONObject jsonObject = (JSONObject) args[0];
+                        String offerCourierId = "";
+                        String userId = "";
+                        LatLng usersLoc = null;
+                        try {
+                            offerCourierId = jsonObject.getString("courierId");
+                            userId = jsonObject.getString("userId");
+                            double llongitude = jsonObject.getDouble("longitude");
+                            double llatitude = jsonObject.getDouble("latitude");
+                            usersLoc = new LatLng(llatitude, llongitude);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(
+                                R.id.map)).getMap();
+                        mMap.addMarker(new MarkerOptions().position(usersLoc).title("Your Destination"));
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(usersLoc));
+                        JSONObject object = new JSONObject();
+                        if(offerCourierId.equals(ServiceUser.getInstance().getId())){
+                            try{
+                                object.put("courierId", offerCourierId);
+                                object.put("userId", userId);
+                            }catch (JSONException e){
+                                Log.e("offerFromUser", e.getLocalizedMessage());
+                            }
+                        }
+                        socket.emit("acceptedByCourier", object);
+                    }
+                });
+
+            }
+
+        }).on("debug", new Emitter.Listener() {
+            @Override
+            public void call(final Object... args) {
+                Log.i("debug" , "entered");
+                //socket.emit("courierLogout", jObject);
+                //mMap.addMarker(new MarkerOptions().position(usersLoc).title("User Location"));
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.i("debug" , "entered");
                     }
                 });
 
             }
 
         });
+
+
         socket.connect();
     }
 
@@ -427,7 +438,7 @@ public class ServiceMainActivity extends FragmentActivity implements OnMapReadyC
         emitCurrentLocation();
         mMap.addMarker(new MarkerOptions().position(currentLoc).title("Current Location"));
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLoc));
-        CameraPosition cameraPosition = new CameraPosition.Builder()
+        cameraPosition = new CameraPosition.Builder()
                 .target(currentLoc)      // Sets the center of the map to location user
                 .zoom(14)                   // Sets the zoom
                 //.bearing(90)                // Sets the orientation of the camera to east

@@ -15,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
@@ -47,7 +46,6 @@ public class UserMainActivity extends Activity{
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private Spinner spinner;
     private LinearLayout profileLayout, prevCartLayout, logoutLayout, adresses_layout, scan_for_couriers;
     private ImageButton en_button, tr_button;
     private DrawerLayout drawerLayout;
@@ -185,16 +183,6 @@ public class UserMainActivity extends Activity{
                 finish();
             }
         });
-        spinner = (Spinner) findViewById(R.id.spinner);
-
-        List<String> categories = new ArrayList<String>();
-        categories.add(getResources().getString(R.string.all));
-
-        // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
-
-        spinner.setAdapter(dataAdapter);
-        //gridView.setAdapter();
     }
 
     private void initRightDrawerView() {
@@ -250,7 +238,7 @@ public class UserMainActivity extends Activity{
         opts.forceNew = true;
 
         try {
-            Util.socket = IO.socket(Util.SERVER_URL, opts);
+            Util.socket = IO.socket(Util.BASE_URL, opts);
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }

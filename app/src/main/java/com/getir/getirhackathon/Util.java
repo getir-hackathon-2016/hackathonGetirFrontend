@@ -48,8 +48,8 @@ public class Util {
     public static double userCurrentLongitude;
     public static Socket socket;
 
-    public static String SERVER_URL1 = "https://fixitt.herokuapp.com";
-    public static String SERVER_URL = "http://192.168.1.95:9000";
+    public static final String BASE_URL1 = "https://fixitt.herokuapp.com";
+    public static String BASE_URL = "http://192.168.1.56:9000";
 
     public static Typeface getFontAwesome(Context context) {
         Typeface fontAwesome = Typeface.createFromAsset(context.getAssets(), "fontawesome-webfont.ttf");
