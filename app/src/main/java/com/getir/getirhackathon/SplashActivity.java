@@ -87,20 +87,6 @@ public class SplashActivity extends FragmentActivity {
                             Intent i = new Intent(mContext, UserMainActivity.class);
                             startActivity(i);
                         }
-
-                        @Override
-                        public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                            super.onSuccess(statusCode, headers, response);
-                            Log.i("get1", response.toString());
-                        }
-
-                        @Override
-                        public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                            super.onSuccess(statusCode, headers, responseString);
-                            Log.i("get2", responseString.toString());
-                        }
-
-
                     });
                 } catch (JSONException e) {
                     e.printStackTrace();

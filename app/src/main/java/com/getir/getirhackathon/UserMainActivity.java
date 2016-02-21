@@ -63,6 +63,9 @@ public class UserMainActivity extends Activity{
 
         setContentView(R.layout.user_main_layout);
 
+        SendAddressDialog dialog = new SendAddressDialog(mContext);
+        dialog.show();
+
         //To initiliaze view.
         initView();
         //Start socketIO

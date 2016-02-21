@@ -37,7 +37,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignWithParentIfMissing="true"
         android:gravity="center_vertical"
-        android:text="Distance"
+        android:text=""
         android:textSize="18sp" />
 
     <TextView
@@ -50,7 +50,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignWithParentIfMissing="true"
         android:gravity="center_vertical"
-        android:text="Duration"
+        android:text=""
         android:textSize="18sp" />
 
     <TextView

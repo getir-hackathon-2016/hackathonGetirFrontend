@@ -16,8 +16,8 @@ import cz.msebera.android.httpclient.HttpEntity;
  */
 public class RestClient {
 
-    private static final String BASE_URL1 = "https://fixitt.herokuapp.com";
-    private static final String BASE_URL = "http://192.168.1.56:9000";
+    private static final String BASE_URL = "https://fixitt.herokuapp.com";
+    private static final String BASE_URL1 = "http://192.168.1.56:9000";
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 

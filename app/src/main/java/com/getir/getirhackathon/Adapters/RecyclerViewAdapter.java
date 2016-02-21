@@ -85,15 +85,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         final String name = mDataset.get(position).getName();
         holder.txtHeader.setText(mDataset.get(position).getName());
         holder.txtFooter.setText(mDataset.get(position).getInfo());
-        holder.price.setText(String.valueOf(mDataset.get(position).getPrice().getTl()));
+        holder.price.setText(String.valueOf(mDataset.get(position).getPrice().getTl()) + "TL");
         holder.duration.setText(String.valueOf(mDataset.get(position).getDistance().getDurationInSeconds() / 60 + context.getResources().getString(R.string.minute)));
         holder.duration.setText(String.valueOf(mDataset.get(position).getDistance().getDistanceInCentimeters() / 100 + context.getResources().getString(R.string.meters)));
-        holder.txtHeader.setOnClickListener(new View.OnClickListener() {
+//        holder.txtHeader.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //sendOrder();
+//                if(sendOrder(mDataset.get(position))){
+//                    //holder.relative_layout.setBackgroundColor(Color.GREEN);
+//                }
+//            }
+//        });
+
+        holder.relative_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //sendOrder();
                 if(sendOrder(mDataset.get(position))){
-                    //holder.relative_layout.setBackgroundColor(Color.GREEN);
                 }
             }
         });
